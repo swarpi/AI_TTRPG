@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dnd-mcp"
+version = "0.1.0"
+description = "AI-powered TTRPG MCP service — D&D 5e rules engine over FastMCP 3"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+dependencies = [
+    # MCP framework (FastMCP 3.x)
+    "fastmcp>=2.3.0",
+    # D&D 5e rules engine (100% offline, 8.7 MB bundled data)
+    "dnd-5e-core>=0.1.0",
+    # OpenTelemetry SDK + console exporter
+    "opentelemetry-sdk>=1.24.0",
+    "opentelemetry-api>=1.24.0",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.24.0",
+    # Async HTTP (used by tools that may call external endpoints later)
+    "httpx>=0.27.0",
+    # Pydantic v2 (FastMCP uses it internally; pin to avoid conflicts)
+    "pydantic>=2.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dnd_mcp*"]
