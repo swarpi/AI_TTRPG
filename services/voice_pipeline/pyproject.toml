@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voice-pipeline"
+version = "0.1.0"
+description = "AI-TTRPG Sprint 2 — WebRTC voice loop (Pipecat + Deepgram + ElevenLabs)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+dependencies = [
+    # Pipecat core + transports + services
+    "pipecat-ai[daily,deepgram,elevenlabs,silero,anthropic,openai]>=0.0.60",
+    # Async HTTP (Daily room creation REST calls)
+    "httpx>=0.27.0",
+    # Env loading
+    "python-dotenv>=1.0.0",
+    # Logging
+    "loguru>=0.7.0",
+    # Ticket 2.2 — semantic router
+    "redisvl>=0.3.0",         # async RedisSearch vector index
+    "fastembed>=0.3.0",        # ONNX embeddings, no torch required (~23 MB model)
+    "numpy>=1.26",
+    # Ticket 3.2 — MCP Bridge
+    "mcp>=1.0.0",
+    "httpx-sse>=0.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["voice_pipeline*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
